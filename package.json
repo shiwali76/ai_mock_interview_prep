@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-    
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.3",
@@ -38,7 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -49,6 +48,6 @@
     "typescript": "^5"
   },
   "resolutions": {
-  "zod": "3.25.76"
-}
+    "zod": "3.25.76"
+  }
 }
