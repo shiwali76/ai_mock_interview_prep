@@ -5,13 +5,15 @@ const Page = async () => {
   const user = await getCurrentUser();
 
   return (
-    <div className="container mx-auto p-4">
-      <h3 className="text-xl font-semibold mb-4">Interview generation</h3>
-      <Agent
-        userName={user?.name || "Guest"}
-      />
-    </div>
-  );
-};
+    <>
+      <h3>Interview generation</h3>
 
+      <Agent
+        userName={user?.name}
+        userId={user?.id}
+        type="generate"
+      />
+    </>
+  );
+} 
 export default Page;
