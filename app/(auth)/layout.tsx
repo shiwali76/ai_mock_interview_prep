@@ -1,36 +1,13 @@
-import { ReactNode } from 'react';
-import { redirect } from 'next/navigation';
-import { isAuthenticated } from '@/lib/actions/auth.action';
+import { ReactNode } from "react";
+import { redirect } from "next/navigation";
 
-interface AuthLayoutProps {
-  children: ReactNode;
-}
+import { isAuthenticated } from "@/lib/actions/auth.action";
 
-const AuthLayout = async ({ children }: AuthLayoutProps) => {
-  try {
-    const isUserAuthenticated = await isAuthenticated();
-    
-    if (isUserAuthenticated) {
-      redirect('/');
-    }
+const AuthLayout = async ({ children }: { children: ReactNode }) => {
+  const isUserAuthenticated = await isAuthenticated();
+  if (isUserAuthenticated) redirect("/");
 
-    return (
-      <main className="auth-layout min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          {children}
-        </div>
-      </main>
-    );
-  } catch (error) {
-    console.error('Authentication check failed:', error);
-    // Optionally redirect to error page or return error UI
-    return (
-      <div className="auth-error text-center p-8">
-        <h2>Authentication Service Unavailable</h2>
-        <p>Please try again later</p>
-      </div>
-    );
-  }
+  return <div className="auth-layout">{children}</div>;
 };
 
 export default AuthLayout;
