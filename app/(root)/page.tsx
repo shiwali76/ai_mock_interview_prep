@@ -2,11 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { dummyInterviews } from '@/constants'
 import InterviewCard from '@/components/InterviewCard';
-import { getCurrentUser, getLatestInterviews } from "@/lib/actions/auth.action";
+import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
-  getInterviewsByUserId, } from "@/lib/actions/auth.action";
+  getInterviewsByUserId,getLatestInterviews, getInterviewById } from "@/lib/actions/general.action";
+
 
 
 
