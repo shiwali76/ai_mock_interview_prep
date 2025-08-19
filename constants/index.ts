@@ -1,5 +1,4 @@
 import { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
-//import { CreateAssistantDTO, CreateWorkflowDTO } from "@vapi-ai/web/dist/api";
 import { z } from "zod";
 
 export const mappings = {
@@ -157,37 +156,32 @@ End the conversation on a polite and positive note.
 };
 
 export const feedbackSchema = z.object({
-  totalScore: z.number(),
-  categoryScores: z.tuple([
-    z.object({
-      name: z.literal("Communication Skills"),
-      score: z.number(),
-      comment: z.string(),
+  totalScore: z.number().min(0).max(100).describe("Overall score out of 100"),
+  categoryScores: z.object({
+    communicationSkills: z.object({
+      score: z.number().min(0).max(20).describe("Communication skills score"),
+      comment: z.string().describe("Comment on communication skills")
     }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
-      score: z.number(),
-      comment: z.string(),
+    technicalKnowledge: z.object({
+      score: z.number().min(0).max(20).describe("Technical knowledge score"),
+      comment: z.string().describe("Comment on technical knowledge")
     }),
-    z.object({
-      name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
+    problemSolving: z.object({
+      score: z.number().min(0).max(20).describe("Problem solving score"),
+      comment: z.string().describe("Comment on problem solving")
     }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
+    culturalFit: z.object({
+      score: z.number().min(0).max(20).describe("Cultural fit score"),
+      comment: z.string().describe("Comment on cultural fit")
     }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
-  strengths: z.array(z.string()),
-  areasForImprovement: z.array(z.string()),
-  finalAssessment: z.string(),
+    confidenceClarity: z.object({
+      score: z.number().min(0).max(20).describe("Confidence and clarity score"),
+      comment: z.string().describe("Comment on confidence and clarity")
+    })
+  }),
+  strengths: z.array(z.string()).describe("List of candidate's strengths"),
+  areasForImprovement: z.array(z.string()).describe("List of areas for improvement"),
+  finalAssessment: z.string().describe("Final assessment and summary")
 });
 
 export const interviewCovers = [

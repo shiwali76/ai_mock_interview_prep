@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import InterviewCard from '@/components/InterviewCard';
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import {
-  getInterviewsByUserId,getLatestInterviews, getInterviewById } from "@/lib/actions/general.action";
+  getInterviewsByUserId,getLatestInterviews } from "@/lib/actions/general.action";
 
 
 

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants"
-// import { createFeedback } from "@/lib/actions/general.action"; // Feedback disabled
+import { createFeedback } from "@/lib/actions/general.action";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -85,23 +85,15 @@ const Agent = ({
       setLastMessage(messages[messages.length - 1].content);
     }
 
-    // Feedback disabled for now
     const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-      console.log("handleGenerateFeedback");
-      const { success, feedbackId: id } = {
-        success: true,
-        id : 'feedback-id'
-      }
+      const { success, feedbackId: id } = await createFeedback({
+        interviewId: interviewId!,
+        userId: userId!,
+        transcript: messages,
+        feedbackId,
+      });
       
-      //await createFeedback({
-        // interviewId: interviewId!,
-        // userId: userId!,
-        // transcript: messages,
-        // feedbackId,
-      //});
-
-    if (success && id) {
-
+      if (success && id) {
         router.push(`/interview/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
@@ -115,7 +107,6 @@ const Agent = ({
       } else {
         handleGenerateFeedback(messages);
       }
-      router.push("/"); // Just go home after call ends
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
@@ -123,11 +114,11 @@ const Agent = ({
     setCallStatus(CallStatus.CONNECTING);
 
     if (type === "generate") {
-      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID, {
+      await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID,{
         variableValues: {
           username: userName,
           userid: userId,
-        } 
+        },
       });
     } else {
       let formattedQuestions = "";
